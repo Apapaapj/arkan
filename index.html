@@ -2,66 +2,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rank Ibadah Simple</title>
+<title>██ SYSTEM OVERRIDE ██</title>
 <style>
-body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
-.card{background:#1e293b;padding:20px;border-radius:15px;max-width:320px;margin:auto}
-button{padding:10px;margin:5px;border:none;border-radius:10px;width:100%}
-.ok{background:#22c55e}
-.no{background:#ef4444}
+body{margin:0;font-family:monospace;background:black;color:#00ffcc;overflow:hidden}
+#boot,#lock{position:fixed;width:100%;height:100%;background:black;color:#00ffcc;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#main{display:none;padding:15px}
+.card{border:1px solid #00ffcc;padding:15px;margin:10px 0;cursor:pointer}
+#popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:black;border:1px solid #00ffcc;padding:15px;display:none;width:80%}
+#ip{position:fixed;bottom:5px;left:5px;font-size:10px;color:red}
+#warning{position:fixed;top:0;width:100%;text-align:center;color:red;font-size:12px}
+#cam{position:fixed;top:10px;right:10px;color:red;font-size:12px}
 </style>
 </head>
-<body>
-<div class="card">
-<h2 id="rank">Warrior</h2>
-<p>Bintang: <span id="star">0</span></p>
-<p>Streak: <span id="streak">0</span></p><button class="ok" onclick="add()">Saya Sholat ✅</button> <button class="no" onclick="miss()">Saya Lalai ❌</button> <button onclick="resetSeason()">Reset Season 🔄</button>
+<body><div id="boot"><div id="text"></div></div>
+<div id="lock" style="display:none">
+<h2>⚠ ACCESS DENIED ⚠</h2>
+<p id="count"></p>
+</div><div id="main">
+<h2>☠ DARK CORE DATABASE ☠</h2>
+<div class="card" onclick="openData('DEBI OMPONG')">DEBI OMPONG</div>
+<div class="card" onclick="openData('AMRU JAWA KUNO')">AMRU JAWA KUNO</div>
+<div class="card" onclick="openData('NABIL PATEM')">NABIL PATEM</div>
+<div class="card" onclick="openData('RAFATHUL ZOMBIE')">RAFATHUL ZOMBIE</div>
+<div class="card" onclick="openData('ARKAN ORANG GANTENG')">ARKAN ORANG GANTENG</div>
+</div><div id="popup">
+<h3 id="name"></h3>
+<p id="info"></p>
+<p id="track"></p>
+</div><div id="ip"></div>
+<div id="warning">⚠ YOU ARE BEING MONITORED ⚠</div>
+<div id="cam">📸 CAMERA ACTIVE</div><audio autoplay loop>
+<source src="https://www.myinstants.com/media/sounds/creepy-ambience.mp3">
+</audio><audio id="boom">
+<source src="https://www.myinstants.com/media/sounds/loud-scream.mp3">
+</audio><script>
+// BOOT
+let bootText=["Booting system...","Injecting code...","Bypassing firewall...","ACCESS GRANTED"];
+let i=0;
+function boot(){
+ if(i<bootText.length){
+  document.getElementById('text').innerText=bootText[i];
+  i++;
+  setTimeout(boot,700);
+ }else{
+  document.getElementById('boot').style.display='none';
+  document.getElementById('main').style.display='block';
+ }
+}
+boot();
 
-</div><script>
-let star = parseInt(localStorage.getItem('star')||0);
-let streak = parseInt(localStorage.getItem('streak')||0);
-let lastDay = localStorage.getItem('day')||"";
-
-const ranks=["Warrior","Elite","Master","Grandmaster","Epic","Legend","Mythic","Immortal"];
-
-function getRank(){
-let i=Math.floor(star/5);
-if(i>=ranks.length) i=ranks.length-1;
-return ranks[i];
+// DATA
+function openData(nama){
+ document.getElementById('popup').style.display='block';
+ document.getElementById('name').innerText=nama;
+ document.getElementById('info').innerText="FILE CORRUPTED...";
+ let loc=["Jakarta","Unknown","Dark Node","Hidden Server"];
+ document.getElementById('track').innerText="Tracking: "+loc[Math.floor(Math.random()*loc.length)];
 }
 
-function update(){
-document.getElementById('star').innerText=star;
-document.getElementById('streak').innerText=streak;
-document.getElementById('rank').innerText=getRank();
-localStorage.setItem('star',star);
-localStorage.setItem('streak',streak);
-}
+// FAKE IP
+setInterval(()=>{
+ let ip=Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255);
+ document.getElementById('ip').innerText="IP TRACE: "+ip;
+},2000);
 
-function add(){
-let today=new Date().toDateString();
-if(lastDay!==today){
-star++;
-streak++;
-lastDay=today;
-localStorage.setItem('day',today);
-update();
-}
-}
+// GLITCH
+setInterval(()=>{
+ document.body.style.filter="hue-rotate("+Math.random()*360+"deg)";
+},500);
 
-function miss(){
-streak=0;
-star=Math.max(0,star-1);
-update();
-}
-
-function resetSeason(){
-star=0;
-streak=0;
-localStorage.clear();
-update();
-}
-
-update();
+// RANDOM LOCKDOWN
+setInterval(()=>{
+ if(Math.random()>0.75){
+  document.getElementById('main').style.display='none';
+  document.getElementById('lock').style.display='flex';
+  document.getElementById('boom').play();
+  let c=5;
+  let inter=setInterval(()=>{
+    document.getElementById('count').innerText="System Lock: "+c;
+    c--;
+    if(c<0){
+      clearInterval(inter);
+      document.getElementById('lock').style.display='none';
+      document.getElementById('main').style.display='block';
+    }
+  },1000);
+ }
+},7000);
 </script></body>
 </html>
