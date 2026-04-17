@@ -1,161 +1,67 @@
-<!DOCTYPE html>  <html lang="id">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>4rknnnajaaa Gallery</title>  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">  <style>  
-body {  
-    margin: 0;  
-    font-family: 'Poppins', sans-serif;  
-    background: #0f0f0f;  
-    color: white;  
-}  
-  
-/* ANIMASI */  
-.fade {  
-    animation: fadeIn 1.5s ease;  
-}  
-@keyframes fadeIn {  
-    from {opacity: 0;}  
-    to {opacity: 1;}  
-}  
-  
-/* LOGIN */  
-#login {  
-    height: 100vh;  
-    display: flex;  
-    justify-content: center;  
-    align-items: center;  
-}  
-  
-.login-box {  
-    text-align: center;  
-}  
-  
-input {  
-    padding: 10px;  
-    border-radius: 10px;  
-    border: none;  
-    outline: none;  
-    margin-top: 10px;  
-}  
-  
-button {  
-    padding: 10px 20px;  
-    margin-top: 10px;  
-    border: none;  
-    border-radius: 10px;  
-    background: white;  
-    cursor: pointer;  
-}  
-  
-/* MAIN */  
-#main {  
-    display: none;  
-}  
-  
-/* HEADER */  
-header {  
-    text-align: center;  
-    padding: 30px;  
-}  
-  
-header p {  
-    opacity: 0.6;  
-}  
-  
-/* GALERI */  
-.gallery {  
-    display: grid;  
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));  
-    gap: 10px;  
-    padding: 15px;  
-}  
-  
-.gallery img {  
-    width: 100%;  
-    height: 200px;  
-    object-fit: cover;  
-    border-radius: 15px;  
-    cursor: pointer;  
-    transition: 0.3s;  
-}  
-  
-.gallery img:hover {  
-    transform: scale(1.05);  
-}  
-  
-/* MODAL */  
-.modal {  
-    display: none;  
-    position: fixed;  
-    background: rgba(0,0,0,0.9);  
-    width: 100%;  
-    height: 100%;  
-    top: 0;  
-    left: 0;  
-}  
-  
-.modal img {  
-    display: block;  
-    margin: auto;  
-    max-width: 90%;  
-    max-height: 90%;  
-    margin-top: 50px;  
-}  
-  
-.close {  
-    position: absolute;  
-    right: 30px;  
-    top: 20px;  
-    font-size: 30px;  
-    cursor: pointer;  
-}  
-</style>  </head>  <body>  <!-- LOGIN -->  <div id="login">  
-    <div class="login-box fade">  
-        <h2>Login Dulu 😈</h2>  
-        <input type="password" id="pass" placeholder="Password">  
-        <br>  
-        <button onclick="login()">Masuk</button>  
-    </div>  
-</div>  <!-- MAIN -->  <div id="main" class="fade">  <header>  
-    <h1>📸 4rknnnajaaa</h1>  
-    <p>Aesthetic Gallery</p>  
-</header>  <div class="gallery">  
-    <img src="IMG_20260324_225639_460.jpg">    
-<img src="IMG_20260324_225639_424.jpg">  
-    <img src="IMG_20260324_225639_382.jpg">  
-    <img src="motion_photo_5823942349673579073.jpg">  
-    <img src="motion_photo_7247671055954824122.jpg">  
-    <img src="motion_photo_5808118521687866893~2.jpg">  
-</div>  </div>  <!-- MODAL -->  <div class="modal" id="modal">  
-    <span class="close" onclick="closeModal()">&times;</span>  
-    <img id="modal-img">  
-</div>  <!-- MUSIK -->  <audio autoplay loop>  
-    <source src="music.mp3" type="audio/mpeg">  
-</audio>  <script>  
-function login() {  
-    let password = document.getElementById("pass").value;  
-    if(password === "12345") {  
-        document.getElementById("login").style.display = "none";  
-        document.getElementById("main").style.display = "block";  
-    } else {  
-        alert("Password salah!");  
-    }  
-}  
-  
-// MODAL FOTO  
-const images = document.querySelectorAll(".gallery img");  
-const modal = document.getElementById("modal");  
-const modalImg = document.getElementById("modal-img");  
-  
-images.forEach(img => {  
-    img.onclick = () => {  
-        modal.style.display = "block";  
-        modalImg.src = img.src;  
-    }  
-});  
-  
-function closeModal() {  
-    modal.style.display = "none";  
-}  
-</script>  </body>  
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rank Ibadah Simple</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
+.card{background:#1e293b;padding:20px;border-radius:15px;max-width:320px;margin:auto}
+button{padding:10px;margin:5px;border:none;border-radius:10px;width:100%}
+.ok{background:#22c55e}
+.no{background:#ef4444}
+</style>
+</head>
+<body>
+<div class="card">
+<h2 id="rank">Warrior</h2>
+<p>Bintang: <span id="star">0</span></p>
+<p>Streak: <span id="streak">0</span></p><button class="ok" onclick="add()">Saya Sholat ✅</button> <button class="no" onclick="miss()">Saya Lalai ❌</button> <button onclick="resetSeason()">Reset Season 🔄</button>
+
+</div><script>
+let star = parseInt(localStorage.getItem('star')||0);
+let streak = parseInt(localStorage.getItem('streak')||0);
+let lastDay = localStorage.getItem('day')||"";
+
+const ranks=["Warrior","Elite","Master","Grandmaster","Epic","Legend","Mythic","Immortal"];
+
+function getRank(){
+let i=Math.floor(star/5);
+if(i>=ranks.length) i=ranks.length-1;
+return ranks[i];
+}
+
+function update(){
+document.getElementById('star').innerText=star;
+document.getElementById('streak').innerText=streak;
+document.getElementById('rank').innerText=getRank();
+localStorage.setItem('star',star);
+localStorage.setItem('streak',streak);
+}
+
+function add(){
+let today=new Date().toDateString();
+if(lastDay!==today){
+star++;
+streak++;
+lastDay=today;
+localStorage.setItem('day',today);
+update();
+}
+}
+
+function miss(){
+streak=0;
+star=Math.max(0,star-1);
+update();
+}
+
+function resetSeason(){
+star=0;
+streak=0;
+localStorage.clear();
+update();
+}
+
+update();
+</script></body>
 </html>
